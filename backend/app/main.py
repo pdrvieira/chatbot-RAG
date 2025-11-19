@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import init_db
+from .routes import chat
 
 app = FastAPI(title="Petshop RAG API", version="1.0.0")
 
@@ -12,6 +13,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# registra as rotas
+app.include_router(chat.router, tags=["chat"])
 
 
 @app.on_event("startup")
